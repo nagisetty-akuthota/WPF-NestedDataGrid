@@ -4,11 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_NestedDataGrid"
+        xmlns:vm="clr-namespace:WPF_NestedDataGrid.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:StudentViewModel></vm:StudentViewModel>
+    </Window.DataContext>
     <Grid>
-        <DataGrid AutoGenerateColumns="True">
-            
+        <DataGrid x:Name="DG_myStudents" RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding StudentList}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Date Of Birth" Binding="{Binding Birthday}" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid x:Name="DG_myMarks" ItemsSource="{Binding MyMarks}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="English" Binding="{Binding English}" />
+                            <DataGridTextColumn Header="Maths" Binding="{Binding Maths}" />
+                            <DataGridTextColumn Header="Science" Binding="{Binding Science}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Window>
